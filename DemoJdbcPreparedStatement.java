@@ -55,6 +55,7 @@ public class DemoJdbcPreparedStatement {
                 ps.executeUpdate();
                 ps.close();
             }
+
             // Reuse PS
             connection.setAutoCommit(true);
             PreparedStatement update1_ps = connection.prepareStatement("UPDATE test.t1 SET name = ? WHERE id = 1");
@@ -69,6 +70,7 @@ public class DemoJdbcPreparedStatement {
                     ">>> End repeating update, elapsed: " + Long.toString(System.currentTimeMillis() - s1) + "(ms).");
             // Non-Reuse PS
             connection.setAutoCommit(true);
+
             /**
              * Client side caching prepared statement, cache hit for prepareStatement and close.
              * Try set cachePrepStmts=false|true to see the difference on elapsed time.
