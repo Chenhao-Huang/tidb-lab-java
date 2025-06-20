@@ -40,8 +40,7 @@ public class DemoJdbcBatchInsert {
                 String tidbPassword = System.getenv().getOrDefault("TIDB_PASSWORD", "");
                 String tidbDatabase = System.getenv().getOrDefault("TIDB_DATABASE", "test");
 
-                String connectionUrl = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + 
-                    "?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
+                String connectionUrl = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + "?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3" + "&useServerPrepStmts=true&cachePrepStmts=true&&rewriteBatchedStatements=" + flag ;
                 connection = DriverManager.getConnection(connectionUrl, tidbUser, tidbPassword);
                 
                 System.out.println("Connection established.");
