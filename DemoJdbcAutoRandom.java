@@ -6,17 +6,20 @@ import java.util.concurrent.*;
 public class DemoJdbcAutoRandom {
     
     private static Connection getConnection() throws SQLException {
+        Connection connection = null;
+        
         String tidbHost = System.getenv().getOrDefault("TIDB_HOST", "localhost");
         int tidbPort = Integer.parseInt(System.getenv().getOrDefault("TIDB_PORT", "4000"));
         String tidbUser = System.getenv().getOrDefault("TIDB_USER", "root");
         String tidbPassword = System.getenv().getOrDefault("TIDB_PASSWORD", "");
         String tidbDatabase = System.getenv().getOrDefault("TIDB_DATABASE", "test");
         
-        String connectionString = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + 
-                                "?user=" + tidbUser + "&password=" + tidbPassword + 
-                                "&sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
+        String connectionUrl = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + 
+                    "?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
         
-        return DriverManager.getConnection(connectionString);
+        connection = DriverManager.getConnection(connectionUrl, tidbUser, tidbPassword);
+        
+        return connection;
     }
     
     private static void setupTables(Connection connection) throws SQLException {

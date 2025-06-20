@@ -119,14 +119,14 @@ public class DemoJdbcOptimisticLock {
         String tidbUser = System.getenv().getOrDefault("TIDB_USER", "root");
         String tidbPassword = System.getenv().getOrDefault("TIDB_PASSWORD", "");
         String tidbDatabase = System.getenv().getOrDefault("TIDB_DATABASE", "test");
-        String connection_string = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/test?user=" + 
-                tidbUser + "&password=" + tidbPassword + "&sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
+        String connectionUrl = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + 
+                    "?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
         System.out.println("Connection established.");
 
         boolean retryCommit = args[0].equalsIgnoreCase("retry") ? true : false;
         try {
             for (int i = 0; i < 2; i++) {
-                connections.add(DriverManager.getConnection(connection_string));
+                connections.add(DriverManager.getConnection(connectionUrl, tidbUser, tidbPassword));
             }
             System.out.println("Connection established.");
             Statement s = connections.get(0).createStatement();

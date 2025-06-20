@@ -11,11 +11,13 @@ public class DemoJdbcConnectionServerless {
             String tidbUser = System.getenv().getOrDefault("TIDB_USER", "root");
             String tidbPassword = System.getenv().getOrDefault("TIDB_PASSWORD", "");
             String tidbDatabase = System.getenv().getOrDefault("TIDB_DATABASE", "test");
-            String connection_string = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/test?user=" + 
-                    tidbUser + "&password=" + tidbPassword + "&sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
+            
+            String connectionUrl = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + 
+                    "?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
 
-            connection = DriverManager.getConnection(connection_string);
+            connection = DriverManager.getConnection(connectionUrl, tidbUser, tidbPassword);
             System.out.println("Connection established.");
+            
         } catch (Exception e) {
             System.out.println("Error: " + e);
         } finally {
