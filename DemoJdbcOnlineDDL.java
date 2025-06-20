@@ -11,14 +11,13 @@ public class DemoJdbcOnlineDDL {
         String tidbDatabase = System.getenv().getOrDefault("TIDB_DATABASE", "test");
         
         // TiDB Cloud requires SSL connections
-        String connectionString = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + 
-                                 "?user=" + tidbUser + "&password=" + tidbPassword + 
-                                 "&sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
+        String connectionUrl = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + 
+                    "?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
         
         System.out.println("Connecting to: " + tidbHost + ":" + tidbPort + " with database: " + tidbDatabase);
         
         try {
-            Connection conn = DriverManager.getConnection(connectionString);
+            Connection conn = DriverManager.getConnection(connectionUrl, tidbUser, tidbPassword);
             System.out.println("Connection successful!");
             
             // Test the connection with a simple query

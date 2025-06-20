@@ -33,10 +33,10 @@ public class DemoJdbcPreparedStatement {
             String tidbUser = System.getenv().getOrDefault("TIDB_USER", "root");
             String tidbPassword = System.getenv().getOrDefault("TIDB_PASSWORD", "");
             String tidbDatabase = System.getenv().getOrDefault("TIDB_DATABASE", "test");
-            String connection_string = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/test?user=" + 
-                    tidbUser + "&password=" + tidbPassword + "&sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3&PrepStmts=true&cachePrepStmts=true" ;
+            String connectionUrl = "jdbc:mysql://" + tidbHost + ":" + tidbPort + "/" + tidbDatabase + 
+                    "?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3";
 
-            connection = DriverManager.getConnection(connection_string);
+            connection = DriverManager.getConnection(connectionUrl, tidbUser, tidbPassword);
             System.out.println("Connection established.");
             // Do something in the connection
             String offAutoCommit = "SET @@autocommit = 0";
